@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>메인</title>
+    <link rel="stylesheet" th:href="@{/css/access/home.css}">
+    <link rel="stylesheet" th:href="@{/css/menu/sidebar.css}">
+</head>
+<body>
+<!-- 전체 컨테이너 -->
+<div class="container">
+    <!-- 내비게이션 바 프래그먼트 포함 -->
+    <div th:replace="~{menu/sidebar :: sidebar}" class="sidebar"></div>
+
+    <!-- 대시보드 콘텐츠 영역 -->
+    <div class="main-content">
+        <h1>대시보드</h1>
+        <p>대시보드에 관련된 내용이 여기에 표시됩니다.</p>
+        <!-- 추가적인 대시보드 콘텐츠를 여기에 삽입할 수 있습니다. -->
+    </div>
+</div>
+</body>
+</html>

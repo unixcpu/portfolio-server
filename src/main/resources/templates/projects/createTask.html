@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>태스크 관리</title>
+    <link rel="stylesheet" th:href="@{/css/menu/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/projects/createTask.css}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery 사용 -->
+    <script src="/js/createTask.js" defer></script> <!-- createTask.js 추가 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+</head>
+<body>
+<!-- 전체 컨테이너 -->
+<div class="container">
+    <!-- 내비게이션 바 프래그먼트 포함 -->
+    <div th:replace="~{menu/sidebar :: sidebar}" class="sidebar"></div>
+
+    <!-- 메인 콘텐츠 영역 -->
+    <div class="main-content" >
+        <h2>태스크 생성</h2>
+
+        <!-- 태스크 생성 폼 -->
+        <form th:action="@{/projects/{id}/tasks(id=${projectId})}" method="post" class="task-form">
+            <table class="form-table">
+                <tr>
+                    <th>태스크 이름</th>
+                    <td>
+                        <input type="text" id="name" name="name" required />
+                    </td>
+                </tr>
+                <tr>
+                    <th>설명</th>
+                    <td>
+                        <input type="text" id="description" name="description" required />
+                    </td>
+                </tr>
+                <tr>
+                    <th>상태</th>
+                    <td>
+                        <select id="status" name="status" required>
+                            <option value="todo">할 일</option>
+                            <option value="inprogress">진행 중</option>
+                            <option value="done">완료</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <div class="form-group">
+                <button type="submit" class="submit-button">저장</button>
+            </div>
+        </form>
+
+        <h2>태스크 목록</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>연번</th>
+                <th>태스크 이름</th>
+                <th>설명</th>
+                <th>상태</th>
+            </tr>
+            </thead>
+            <tbody id="taskList">
+            <tr th:each="task : ${tasks}" id="task-[[${task.id}]]">
+                <td th:text="${task.priority}">우선순위</td>
+                <td th:text="${task.id}" style="display:none;">아이디</td> <!-- 숨김 -->
+                <td th:text="${task.name}">태스크 이름</td>
+                <td th:text="${task.description}">설명</td>
+                <td>
+                    <!-- 상태를 변경할 수 있는 select box -->
+                    <select name="status" onchange="submitTaskList()">
+                        <option th:value="todo" th:selected="${task.status == 'todo'}">할 일</option>
+                        <option th:value="inprogress" th:selected="${task.status == 'inprogress'}">진행 중</option>
+                        <option th:value="done" th:selected="${task.status == 'done'}">완료</option>
+                    </select>
+                    <input type="hidden" name="id" th:value="${task.id}"/> <!-- 태스크 ID -->
+                    <input type="hidden" name="projectId" th:value="${projectId}"/> <!-- 프로젝트 ID -->
+                    <!-- 삭제 버튼 폼 -->
+                    <form th:action="@{/projects/tasks/delete}" method="post" style="display:inline;">
+                        <input type="hidden" name="id" th:value="${task.id}"/> <!-- 태스크 ID를 hidden input으로 전송 -->
+                        <input type="hidden" name="projectId" th:value="${projectId}"/> <!-- 프로젝트 ID를 hidden input으로 전송 -->
+                        <button type="submit">삭제</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

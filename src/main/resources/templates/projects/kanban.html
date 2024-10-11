@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>칸반보드</title>
+    <link rel="stylesheet" th:href="@{/css/projects/kanban.css}">
+    <link rel="stylesheet" th:href="@{/css/menu/sidebar.css}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/kanban.js" defer></script>
+</head>
+<body>
+<div class="container">
+    <div th:replace="~{menu/sidebar :: sidebar}" class="sidebar"></div>
+
+    <div class="kanban-board">
+        <div class="kanban-column">
+            <h2>To Do</h2>
+            <div class="task-list" id="todo">
+                <div th:each="task : ${todoTasks}" class="task" th:text="${task.name}" th:id="'task-' + ${task.id}" draggable="true" ondragstart="dragStart(event)">
+                    <!-- 할 일 작업 -->
+                </div>
+            </div>
+        </div>
+
+        <div class="kanban-column">
+            <h2>In Progress</h2>
+            <div class="task-list" id="inprogress">
+                <div th:each="task : ${inProgressTasks}" class="task" th:text="${task.name}" th:id="'task-' + ${task.id}" draggable="true" ondragstart="dragStart(event)">
+                    <!-- 진행 중인 작업 -->
+                </div>
+            </div>
+        </div>
+
+        <div class="kanban-column">
+            <h2>Done</h2>
+            <div class="task-list" id="done">
+                <div th:each="task : ${doneTasks}" class="task" th:text="${task.name}" th:id="'task-' + ${task.id}" draggable="true" ondragstart="dragStart(event)">
+                    <!-- 완료된 작업 -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

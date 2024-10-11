@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>프로필 수정</title>
+    <link rel="stylesheet" th:href="@{/css/menu/sidebar.css}"> <!-- 기본 스타일 시트 -->
+    <link rel="stylesheet" th:href="@{/css/access/profile.css}"> <!-- 프로필 스타일 시트 -->
+</head>
+<body>
+<!-- 전체 컨테이너 -->
+<div class="container">
+    <!-- 내비게이션 바 프래그먼트 포함 -->
+    <div th:replace="~{menu/sidebar :: sidebar}" class="sidebar"></div>
+
+    <!-- 프로필 수정 콘텐츠 영역 -->
+    <div class="main-content">
+        <h2>프로필 수정</h2>
+        <form th:action="@{/access/profile/update}" method="post" class="profile-form" enctype="multipart/form-data">
+            <table class="table">
+                <tr>
+                    <th>프로필 사진</th>
+                    <td>
+                        <img th:src="${user != null && user.profilePicUrl != null ? user.profilePicUrl : '/images/default-profile.png'}"
+                             alt="프로필 사진" class="profile-pic"/>
+                        <input type="file" id="profilePic" name="profilePic" accept="image/*"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>아이디</th>
+                    <td>
+                        <input type="text" id="username" name="username" th:value="${user.username}" required="required"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>이메일</th>
+                    <td>
+                        <input type="email" id="email" name="email" th:value="${user.email}" required="required"/>
+                    </td>
+                </tr>
+                <tr>
+                <tr>
+                    <th>비밀번호</th>
+                    <td>
+                        <input type="password" id="password" name="password" placeholder="새 비밀번호 (변경할 경우 입력)" />
+                    </td>
+                </tr>
+                </tr>
+            </table>
+            <div class="form-group">
+                <button type="submit" class="submit-button">수정하기</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

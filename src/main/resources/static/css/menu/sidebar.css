@@ -1,0 +1,218 @@
+/* 기본 페이지 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5; /* 기본 배경색 */
+    margin: 0;
+    padding: 0;
+}
+
+/* 전체 컨테이너 스타일 */
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* 사이드바 전체 스타일 */
+.sidebar {
+    width: 250px; /* 사이드바 넓이 */
+    padding: 20px;
+    background-color: #2c3e50;
+    color: white; /* 텍스트 색상 */
+    margin-top: 0; /* 위쪽 여백 제거 */
+}
+
+.logo-text {
+    text-align: center; /* 텍스트를 중앙 정렬 */
+    margin: 0 0; /* 위아래 여백 추가 */
+    max-width: 100%; /* 최대 너비를 100%로 설정하여 부모 요소를 초과하지 않도록 함 */
+}
+
+.logo-text h1 {
+    font-size: 2em; /* 기본 폰트 크기 조정 */
+    font-weight: bold; /* 굵은 폰트 */
+    color: #3498db; /* 밝은 파란색 텍스트 */
+    text-transform: uppercase; /* 대문자 변환 */
+    letter-spacing: 1px; /* 문자 간격 조정 */
+    position: relative; /* 위치 조정을 위한 상대적 위치 설정 */
+    display: inline-block; /* 블록 요소로 변경 */
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5); /* 부드러운 텍스트 그림자 */
+}
+
+/* 휴대폰 및 작은 화면에서의 폰트 크기 조정 */
+@media (max-width: 600px) {
+    .logo-text h1 {
+        font-size: 2em; /* 폰트 크기를 줄임 */
+    }
+}
+
+
+.logo-text h1::before,
+.logo-text h1::after {
+    content: ''; /* 가상 요소 생성 */
+    position: absolute; /* 절대 위치 설정 */
+    height: 4px; /* 선 두께 */
+    background-color: #f1c40f; /* 밝은 노란색 선 */
+    width: 25%; /* 선 길이 */
+    top: 50%; /* 수직 중앙 정렬 */
+}
+
+.logo-text h1::before {
+    left: 0; /* 왼쪽 선 */
+    transform: translateY(-50%); /* 수직 중앙 정렬 */
+}
+
+.logo-text h1::after {
+    right: 0; /* 오른쪽 선 */
+    transform: translateY(-50%); /* 수직 중앙 정렬 */
+}
+
+.logo-link {
+    text-decoration: none; /* 링크의 밑줄 제거 */
+    color: inherit; /* 부모 요소의 색상 상속 */
+}
+
+/* 프로필 이미지 섹션 */
+.profile-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+/* 네비게이션 버튼 공통 스타일 */
+.nav-button {
+    display: inline-block;
+    width: 100%;
+    height: 40px; /* 버튼 높이 조정 */
+    padding: 10px; /* 패딩 조정 */
+    margin-bottom: 10px;
+    text-align: center;
+    color: white;
+    background-color: #34495e;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+}
+
+/* 네비게이션 버튼 호버 효과 */
+.nav-button:hover {
+    background-color: #1abc9c; /* 호버 시 배경색 변경 */
+}
+
+/* 가로로 나란히 배치된 버튼들 */
+.nav-buttons-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* 세로 가운데 정렬 */
+    padding: 0
+}
+
+.nav-buttons-row .nav-button {
+    flex: 1;
+    margin-right: 10px; /* 버튼 간 간격 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    height: 50px; /* 버튼 높이 설정 */
+    line-height: 30px; /* 세로 가운데 정렬을 위한 라인 높이 설정 */
+}
+
+.nav-button.disabled {
+    pointer-events: none; /* 클릭 이벤트 비활성화 */
+    opacity: 0.6; /* 불투명도 감소 */
+    color: grey; /* 색상 변경 */
+}
+
+/* 로그아웃 버튼 스타일 */
+.logout-button {
+    width: 100%;
+    padding: 15px;
+    color: white;
+    background-color: #e74c3c;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.logout-button i {
+    margin-right: 10px;
+}
+
+/* 로그아웃 버튼 호버 효과 */
+.logout-button:hover {
+    background-color: #c0392b; /* 호버 시 배경색 변경 */
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px; /* 작은 화면에서 사이드바 너비 조정 */
+    }
+
+    .nav-button {
+        font-size: 14px; /* 버튼 텍스트 크기 축소 */
+        padding: 12px 16px; /* 패딩 축소 */
+        height: 50px; /* 버튼 높이 축소 */
+    }
+
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+    }
+
+    .logo img {
+        max-height: 60px; /* 작은 화면에서 로고 크기 조정 */
+    }
+
+    /* 네비게이션 버튼들을 가로로 배치하는 컨테이너 */
+    .nav-buttons-row {
+        flex-direction: row;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar {
+        width: 100%; /* 모바일 화면에서 전체 너비 사용 */
+        height: auto;
+        position: relative;
+    }
+
+    /* 버튼들이 가로로 배치되도록 설정 */
+    .nav-buttons-row {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .nav-buttons-row .nav-button {
+        flex: 1 1 100%; /* 버튼 너비를 전체로 설정 */
+        margin-bottom: 10px;
+        height: 50px; /* 모바일에서 버튼 높이 조정 */
+    }
+
+    .nav-buttons {
+        flex-direction: column; /* 나머지 버튼들은 세로로 유지 */
+    }
+
+    .nav-button {
+        flex: 1; /* 버튼 너비 자동 조정 */
+    }
+
+    .logout-button {
+        width: calc(100% - 40px); /* 버튼 너비 조정 */
+    }
+
+    .logo img {
+        max-height: 50px; /* 모바일 화면에서 로고 크기 조정 */
+    }
+
+    .logo-link {
+        text-decoration: none; /* 링크의 밑줄 제거 */
+        color: inherit; /* 부모 요소의 색상 상속 */
+    }
+}

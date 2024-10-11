@@ -1,0 +1,31 @@
+/* 기본 페이지 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff; /* 기본 배경색 */
+    margin: 0;
+    padding: 0;
+}
+
+/* 전체 컨테이너 스타일 */
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* 콘텐츠 스타일 */
+.main-content {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #ffffff; /* 대시보드와 동일한 배경색 */
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 제목 스타일 */
+h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}

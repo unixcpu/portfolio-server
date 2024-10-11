@@ -1,0 +1,88 @@
+/* 기본 페이지 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff; /* 기본 배경색 */
+    margin: 0;
+    padding: 0;
+}
+
+/* 전체 컨테이너 스타일 */
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* 콘텐츠 스타일 */
+.main-content {
+    flex: 1;
+    padding: 5px;
+    box-sizing: border-box;
+    background-color: #ffffff; /* 대시보드와 동일한 배경색 */
+    overflow-y: auto;
+}
+
+/* 제목 스타일 */
+h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+
+/* 테이블 스타일 */
+.form-table {
+    width: 100%; /* 테이블 너비를 최대화 */
+    border-collapse: collapse; /* 테두리 겹침 방지 */
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.form-table th {
+    padding: 5px; /* 전체적으로 작은 여백 */
+    background-color: #f2f2f2; /* 헤더 음영 */
+    text-align: left; /* 텍스트 왼쪽 정렬 */
+    border: 1px solid #ddd; /* 테두리 */
+    height: 30px; /* 헤더 높이를 줄임 */
+}
+
+.form-table td {
+    border: 1px solid #ddd; /* 셀 테두리 */
+    padding: 10px; /* 셀 안쪽 여백 */
+}
+
+/* 레이블 스타일 */
+.form-table label {
+    display: block; /* 레이블을 블록 요소로 설정 */
+}
+
+/* 입력 필드 스타일 */
+.form-table input[type="text"],
+.form-table input[type="color"],
+.form-table textarea {
+    width: calc(100% - 20px); /* 입력 필드의 너비를 최대한 늘리기 */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* 제출 버튼 스타일 */
+.submit-button {
+    background-color: #3498db;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.submit-button:hover {
+    background-color: #2980b9;
+}
+
+/* 푸터 스타일 */
+footer {
+    margin-top: 20px; /* 푸터와 콘텐츠 사이 여백 */
+}

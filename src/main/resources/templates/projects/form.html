@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>프로젝트 생성 또는 수정</title>
+    <link rel="stylesheet" th:href="@{/css/menu/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/projects/form.css}">
+</head>
+<body>
+<div class="container">
+    <!-- 사이드바 -->
+    <div th:replace="~{menu/sidebar :: sidebar}" class="sidebar"></div>
+
+    <div class="main-content">
+        <header>
+            <h1 th:text="${project.id == null} ? '새 프로젝트 생성' : '프로젝트 수정'"></h1>
+        </header>
+
+        <main>
+            <form th:action="@{/projects}" method="post" th:object="${project}" enctype="multipart/form-data">
+                <input type="hidden" th:field="*{id}" />
+
+                <table class="form-table">
+                    <!-- 프로젝트 이름 -->
+                    <tr>
+                        <th>
+                            <label for="name">프로젝트 이름</label>
+                        </th>
+                        <td>
+                            <input type="text" id="name" th:field="*{name}" required />
+                        </td>
+                    </tr>
+
+                    <!-- 설명 -->
+                    <tr>
+                        <th>
+                            <label for="description">설명</label>
+                        </th>
+                        <td>
+                            <textarea id="description" th:field="*{description}" required></textarea>
+                        </td>
+                    </tr>
+
+                    <!-- 프로젝트 관리자 -->
+                    <tr>
+                        <th>
+                            <label>프로젝트 관리자</label>
+                        </th>
+                        <td>
+                            <span th:text="${user.username}"></span>
+                        </td>
+                    </tr>
+
+                    <!-- 시작일 -->
+                    <tr>
+                        <th>
+                            <label for="startDate">시작일</label>
+                        </th>
+                        <td>
+                            <input type="date" id="startDate" th:field="*{startDate}" required />
+                        </td>
+                    </tr>
+
+                    <!-- 마감일 -->
+                    <tr>
+                        <th>
+                            <label for="dueDate">마감일</label>
+                        </th>
+                        <td>
+                            <input type="date" id="dueDate" th:field="*{dueDate}" required />
+                        </td>
+                    </tr>
+
+
+                    <!-- 우선순위 -->
+                    <tr>
+                        <th>
+                            <label for="priority">우선순위</label>
+                        </th>
+                        <td>
+                            <select id="priority" th:field="*{priority}" required>
+                                <option value="" disabled selected>우선순위를 선택하세요</option>
+                                <option value="높음">높음</option>
+                                <option value="중간">중간</option>
+                                <option value="낮음">낮음</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <!-- 태그 -->
+                    <tr>
+                        <th>
+                            <label for="tags">태그</label>
+                        </th>
+                        <td>
+                            <input type="text" id="tags" th:field="*{tags}" placeholder="태그를 입력하세요 (쉼표로 구분)" />
+                        </td>
+                    </tr>
+
+                    <!-- 상태 -->
+                    <tr>
+                        <th>
+                            <label for="status">상태</label>
+                        </th>
+                        <td>
+                            <select id="status" th:field="*{status}" required>
+                                <option value="" disabled selected>상태를 선택하세요</option>
+                                <option value="진행 중">진행 중</option>
+                                <option value="완료">완료</option>
+                                <option value="대기 중">대기 중</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <!-- 프로젝트 유형 -->
+                    <tr>
+                        <th>
+                            <label for="type">프로젝트 유형</label>
+                        </th>
+                        <td>
+                            <select id="type" th:field="*{type}" required>
+                                <option value="" disabled selected>유형을 선택하세요</option>
+                                <option value="개발">개발</option>
+                                <option value="디자인">디자인</option>
+                                <option value="마케팅">마케팅</option>
+                                <option value="기타">기타</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <!-- 첨부 파일 -->
+                    <tr>
+                        <th>
+                            <label for="attachments">첨부 파일</label>
+                        </th>
+                        <td>
+                            <input type="file" id="attachments" name="attachments" multiple />
+                        </td>
+                    </tr>
+
+                    <!-- 관련 프로젝트/작업 -->
+                    <tr>
+                        <th>
+                            <label for="relatedProjects">관련 프로젝트/작업</label>
+                        </th>
+                        <td>
+                            <select id="relatedProjects">
+                                <option th:each="proj : ${allProjects}" th:value="${proj.id}" th:text="${proj.name}"></option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                <!-- 제출 버튼 -->
+                <div colspan="2" style="text-align: center;">
+                    <button type="submit" class="submit-button">저장</button>
+                </div>
+            </form>
+
+            <script>
+                // 현재 날짜 가져오기
+                const today = new Date();
+                // 오늘 날짜를 YYYY-MM-DD 형식으로 변환
+                const yyyy = today.getFullYear();
+                const mm = String(today.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 1을 더함
+                const dd = String(today.getDate()).padStart(2, '0');
+                const formattedDate = `${yyyy}-${mm}-${dd}`;
+
+                // 시작일 입력 필드에 오늘 날짜를 기본값으로 설정
+                const startDateInput = document.getElementById('startDate');
+                startDateInput.value = formattedDate;
+                // 최소 선택 가능 날짜를 오늘 날짜로 설정
+                startDateInput.min = formattedDate;
+
+                // 마감일 입력 필드
+                const dueDateInput = document.getElementById('dueDate');
+                // 시작일이 변경될 때마다 마감일 최소 날짜 업데이트
+                startDateInput.addEventListener('change', function() {
+                    dueDateInput.min = startDateInput.value; // 시작일 이후로 설정
+                });
+
+                // 페이지 로드 시 마감일의 최소 날짜도 초기화
+                dueDateInput.min = startDateInput.value;
+            </script>
+        </main>
+    </div>
+</div>
+</body>
+</html>

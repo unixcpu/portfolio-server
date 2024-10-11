@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>프로젝트 관리</title>
+    <link rel="stylesheet" th:href="@{/css/menu/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/projects/list.css}">
+</head>
+<body>
+<!-- 전체 컨테이너 -->
+<div class="container">
+    <!-- 사이드바 -->
+    <div th:replace="~{menu/sidebar :: sidebar}" class="sidebar"></div>
+
+    <!-- 대시보드 콘텐츠 영역 -->
+    <div class="main-content">
+        <h2>프로젝트 목록</h2>
+        <div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>프로젝트</th>
+                    <th>칸반보드</th>
+                    <th>설명</th>
+                    <th>관리자</th>
+                    <th>진행도</th>
+                    <th>작업</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="project : ${projects}">
+                    <td>
+                        <a th:href="@{/projects/{id}/tasks(id=${project.id})}" th:text="${project.name}"></a>
+                    </td>
+                    <td>
+                        <a th:href="@{/projects/{id}/kanban(id=${project.id})}" th:text="${project.name}"></a>
+                    </td>
+                    <td th:text="${project.description}"></td>
+                    <td>
+                        <span th:text="${project.owner.username}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${project.status}"></span>
+                    </td>
+                    <td>
+                        <a th:href="@{/projects/{id}/edit(id=${project.id})}">수정</a>
+                        <form th:action="@{/projects/{id}/delete(id=${project.id})}" method="post" style="display:inline;">
+                            <button type="submit">삭제</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+            <div>
+                <a th:href="@{/projects/new}" class="submit-button">새 프로젝트</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
