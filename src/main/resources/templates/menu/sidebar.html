@@ -13,7 +13,7 @@
     <div th:fragment="sidebar" class="sidebar">
         <!-- 텍스트 로고 섹션 -->
         <div class="logo-text">
-            <a href="/access/home" class="logo-link">
+            <a href="/projects/dashboard" class="logo-link">
                 <h1 id="logo" th:if="${user != null}" th:text="${user.username}"></h1>
                 <h1 id="logo" th:if="${user == null}">로그인하지 않음</h1> <!-- 로그인하지 않았을 때의 대체 텍스트 -->
             </a>

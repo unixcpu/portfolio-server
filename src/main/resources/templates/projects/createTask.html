@@ -44,6 +44,12 @@
                         </select>
                     </td>
                 </tr>
+                <tr>
+                    <th>마감 기한</th>
+                    <td>
+                        <input type="date" id="dueDate" name="dueDate" required />
+                    </td>
+                </tr>
             </table>
             <div class="form-group">
                 <button type="submit" class="submit-button">저장</button>
@@ -58,6 +64,8 @@
                 <th>태스크 이름</th>
                 <th>설명</th>
                 <th>상태</th>
+                <th>마감기한</th>
+                <th>작업</th>
             </tr>
             </thead>
             <tbody id="taskList">
@@ -73,6 +81,9 @@
                         <option th:value="inprogress" th:selected="${task.status == 'inprogress'}">진행 중</option>
                         <option th:value="done" th:selected="${task.status == 'done'}">완료</option>
                     </select>
+                </td>
+                <td th:text="${task.dueDate}">마감 기한</td> <!-- 마감 기한 표시 -->
+                <td>
                     <input type="hidden" name="id" th:value="${task.id}"/> <!-- 태스크 ID -->
                     <input type="hidden" name="projectId" th:value="${projectId}"/> <!-- 프로젝트 ID -->
                     <!-- 삭제 버튼 폼 -->

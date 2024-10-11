@@ -27,13 +27,13 @@ public class SecurityConfig {
 				.authorizeHttpRequests(authorizeRequests -> authorizeRequests
 						                                            .requestMatchers("/css/**", "/images/**", "/js/**", "/uploads/**").permitAll() // 정적 자원 허용
 						                                            .requestMatchers("/", "/access/login", "/access/register", "/projects/{projectId}/tasklist", "/error", "/projects/download/**").permitAll() // 공개 페이지 허용
-						                                            .requestMatchers("/access/home").authenticated() // 인증된 사용자만 접근 가능
+						                                            .requestMatchers("/projects/dashboard").authenticated() // 인증된 사용자만 접근 가능
 						                                            .anyRequest().authenticated() // 나머지 요청은 인증 필요
 				)
 				.formLogin(formLogin -> formLogin
 						                        .loginPage("/access/login") // 로그인 페이지의 경로
 						                        .permitAll() // 모든 사용자에게 접근 허용
-						                        .defaultSuccessUrl("/access/home", true)
+						                        .defaultSuccessUrl("/projects/dashboard", true)
 						                        .failureUrl("/access/login?error=true")
 				)
 				.logout(logout -> logout

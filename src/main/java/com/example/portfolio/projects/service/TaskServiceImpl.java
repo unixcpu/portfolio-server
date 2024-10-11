@@ -121,4 +121,28 @@ public class TaskServiceImpl implements TaskService {
 		taskRepository.save(task);
 	}
 	
+	@Override
+	public int getTotalTaskCount() {
+		return taskRepository.getTotalTaskCount();
+	}
+	
+	@Override
+	public int getCompletedTaskCount() {
+		return taskRepository.getCompletedTaskCount();
+	}
+	
+	@Override
+	public int getIncompleteTaskCount() {
+		return taskRepository.getIncompleteTaskCount();
+	}
+	
+	@Override
+	public int getOverdueTaskCount() {
+		return taskRepository.getOverdueTaskCount();
+	}
+	
+	@Override
+	public List<Task> findAllTasks() {
+		return taskRepository.findAllTasks();
+	}
 }

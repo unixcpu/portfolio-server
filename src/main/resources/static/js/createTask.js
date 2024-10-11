@@ -1,37 +1,3 @@
-// 태스크 추가 함수 (AJAX 사용)
-function addTask(taskName) {
-    const projectId = document.getElementById('projectId').value;
-
-    $.ajax({
-        url: '/projects/' + projectId + '/tasks',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify({ name: taskName }), // 태스크 이름을 JSON 형식으로 전송
-        success: function(response) {
-            // 응답으로 받은 새 태스크 정보로 HTML 추가
-            const newRow = `
-                <tr id="task-${response.id}" draggable="true" ondragstart="drag(event)">
-                    <td>${response.name}</td>
-                    <td>
-                        <form th:action="@{/projects/${projectId}/tasks/${response.id}/status}" method="post" class="status-form">
-                            <select name="status" onchange="submitStatusChange(this, ${response.id})">
-                                <option value="TO_DO" ${response.status === 'TO_DO' ? 'selected' : ''}>할 일</option>
-                                <option value="IN_PROGRESS" ${response.status === 'IN_PROGRESS' ? 'selected' : ''}>진행 중</option>
-                                <option value="DONE" ${response.status === 'DONE' ? 'selected' : ''}>완료</option>
-                            </select>
-                        </form>
-                    </td>
-                </tr>
-            `;
-            $('#taskList').append(newRow); // tbody에 새 행 추가
-        },
-        error: function(xhr, status, error) {
-            console.error('태스크 추가 실패:', error);
-            alert('태스크 추가 실패: ' + xhr.responseText);
-        }
-    });
-}
-
 // Sortable.js를 사용하여 드래그 앤 드롭 기능 추가
 const taskList = document.getElementById('taskList');
 const sortable = new Sortable(taskList, {

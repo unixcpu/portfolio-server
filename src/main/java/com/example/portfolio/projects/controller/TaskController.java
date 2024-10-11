@@ -3,7 +3,9 @@ package com.example.portfolio.projects.controller;
 import com.example.portfolio.access.model.Role;
 import com.example.portfolio.access.model.User;
 import com.example.portfolio.access.service.UserService;
+import com.example.portfolio.projects.model.Project;
 import com.example.portfolio.projects.model.Task;
+import com.example.portfolio.projects.service.ProjectService;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,19 +28,20 @@ import java.util.Map;
 @Controller
 @RequestMapping("/projects")
 public class TaskController {
+	
+	@Autowired
+	private ProjectService projectService;
 	@Autowired
 	private UserService userService;
 	@Autowired
 	private TaskService taskService;
 	
 	@GetMapping("/{id}/tasks")
-	public String createTaskForm(Authentication authentication, @PathVariable("id") Long id, @RequestParam(value = "searching", required = false, defaultValue = "false") boolean searching, Model model) {
-		if(searching) { // searching이 true일 경우
-			List<Task> tasks = taskService.getTasksByProjectId(id);
-			model.addAttribute("tasks", tasks);
-		}
-
-
+	public String createTaskForm(Authentication authentication, @PathVariable("id") Long id, Model model) {
+		// 프로젝트의 마감일을 가져와서 모델에 추가
+		Project project = projectService.findById(id); // 프로젝트 정보를 가져오는 서비스 메서드
+		model.addAttribute("projectDueDate", project.getDueDate()); // 프로젝트 마감일을 추가
+		
 		String username = authentication.getName();
 		User user = userService.findByUsername(username);
 		Role userRole = userService.findRoleByUsername(username);

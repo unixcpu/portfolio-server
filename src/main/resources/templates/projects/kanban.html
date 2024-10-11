@@ -17,8 +17,8 @@
         <div class="kanban-column">
             <h2>To Do</h2>
             <div class="task-list" id="todo">
-                <div th:each="task : ${todoTasks}" class="task" th:text="${task.name}" th:id="'task-' + ${task.id}" draggable="true" ondragstart="dragStart(event)">
-                    <!-- 할 일 작업 -->
+                <div th:each="task : ${todoTasks}" class="task" th:id="'task-' + ${task.id}" draggable="true" ondragstart="dragStart(event)">
+                    <span th:text="${task.name} + ' (' + ${task.dueDate} + ')'">태스크 이름 (마감기한)</span>
                 </div>
             </div>
         </div>
@@ -26,8 +26,8 @@
         <div class="kanban-column">
             <h2>In Progress</h2>
             <div class="task-list" id="inprogress">
-                <div th:each="task : ${inProgressTasks}" class="task" th:text="${task.name}" th:id="'task-' + ${task.id}" draggable="true" ondragstart="dragStart(event)">
-                    <!-- 진행 중인 작업 -->
+                <div th:each="task : ${inProgressTasks}" class="task" th:id="'task-' + ${task.id}" draggable="true" ondragstart="dragStart(event)">
+                    <span th:text="${task.name} + ' (' + ${task.dueDate} + ')'">태스크 이름 (마감기한)</span>
                 </div>
             </div>
         </div>
@@ -35,8 +35,8 @@
         <div class="kanban-column">
             <h2>Done</h2>
             <div class="task-list" id="done">
-                <div th:each="task : ${doneTasks}" class="task" th:text="${task.name}" th:id="'task-' + ${task.id}" draggable="true" ondragstart="dragStart(event)">
-                    <!-- 완료된 작업 -->
+                <div th:each="task : ${doneTasks}" class="task" th:id="'task-' + ${task.id}" draggable="true" ondragstart="dragStart(event)">
+                    <span th:text="${task.name} + ' (' + ${task.dueDate} + ')'">태스크 이름 (마감기한)</span>
                 </div>
             </div>
         </div>

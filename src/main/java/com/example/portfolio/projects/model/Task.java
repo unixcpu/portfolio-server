@@ -2,6 +2,9 @@ package com.example.portfolio.projects.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 @Entity
 @Table(name = "task")
 public class Task {
@@ -14,6 +17,7 @@ public class Task {
 	private String description;
 	private String status;
 	
+	private LocalDate  dueDate; // 마감일
 	@ManyToOne // Many tasks can belong to one project
 	@JoinColumn(name = "project_id") // FK 컬럼 이름
 	private Project project; // Project 참조 추가
@@ -69,6 +73,11 @@ public class Task {
 		this.status = status;
 	}
 	
-	public void setProjectId(Long projectId) {
+	public LocalDate getDueDate() {
+		return dueDate;
+	}
+	
+	public void setDueDate(LocalDate dueDate) {
+		this.dueDate = dueDate;
 	}
 }

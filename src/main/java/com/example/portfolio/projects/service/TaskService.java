@@ -24,4 +24,14 @@ public interface TaskService {
 	void deleteTask(Long taskId);
 	
 	void updateTaskStatus(Long id, String status);
+	
+	int getTotalTaskCount();
+	
+	int getCompletedTaskCount();
+	
+	int getIncompleteTaskCount();
+	
+	int getOverdueTaskCount();
+	
+	List<Task> findAllTasks();
 }

@@ -23,4 +23,24 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     @Modifying
     @Query("UPDATE Task t SET t.priority = :priority WHERE t.id = :taskId")
     int updateTaskPriorityById(@Param("taskId") Long taskId, @Param("priority") Integer priority);
+    
+    // 총 작업 개수
+    @Query("SELECT COUNT(t) FROM Task t")
+    int getTotalTaskCount();
+    
+    // 완료된 작업 개수
+    @Query("SELECT COUNT(t) FROM Task t WHERE t.status = 'done'")
+    int getCompletedTaskCount();
+    
+    // 미완료된 작업 개수
+    @Query("SELECT COUNT(t) FROM Task t WHERE t.status != 'done'")
+    int getIncompleteTaskCount();
+    
+    // 마감일이 지난 작업 개수
+    @Query("SELECT COUNT(t) FROM Task t WHERE t.dueDate < CURRENT_DATE AND t.status != 'done'")
+    int getOverdueTaskCount();
+    
+    // 모든 작업 조회
+    @Query("SELECT t FROM Task t")
+    List<Task> findAllTasks();
 }
