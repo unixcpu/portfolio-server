@@ -1,6 +1,3 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
 name: Build and deploy JAR app to Azure Web App - portfolio-server
 
 on:
@@ -9,6 +6,11 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  actions: read  # Actions 권한 설정
+  contents: read  # 레포지토리 내용 읽기 권한 설정
+  id-token: write  # JWT 요청을 위한 권한 설정
+
 jobs:
   build:
     runs-on: windows-latest
@@ -16,20 +18,59 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # 기존 모든 아티팩트 삭제
+      - name: Delete all existing artifacts before build
+        run: |
+          echo "Fetching all artifacts..."
+
+          # GitHub API를 사용하여 아티팩트 ID를 가져옵니다.
+          $response = Invoke-RestMethod -Uri "https://api.github.com/repos/${{ github.repository }}/actions/artifacts" `
+                                         -Headers @{
+                                             "Authorization" = "token ${{ secrets.GITHUB_TOKEN }}"
+                                             "Accept" = "application/vnd.github.v3+json"
+                                         }
+
+          $ARTIFACTS = $response.artifacts | Select-Object -ExpandProperty id
+
+          echo "Found artifacts: $ARTIFACTS"
+
+          # foreach 문으로 아티팩트를 삭제합니다.
+          foreach ($ARTIFACT_ID in $ARTIFACTS) {
+            echo "Deleting artifact with ID: $ARTIFACT_ID"
+            Invoke-RestMethod -Uri "https://api.github.com/repos/${{ github.repository }}/actions/artifacts/$ARTIFACT_ID" `
+                              -Method Delete `
+                              -Headers @{
+                                  "Authorization" = "token ${{ secrets.GITHUB_TOKEN }}"
+                                  "Accept" = "application/vnd.github.v3+json"
+                              }
+          }
+
       - name: Set up Java version
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'microsoft'
 
-      - name: Build with Maven
-        run: mvn clean install
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            gradle-${{ runner.os }}
+
+      - name: Build with Gradle
+        run: |
+          ./gradlew clean build  # Gradle로 빌드합니다.
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/*.jar'
+          path: '${{ github.workspace }}/build/libs/*.jar'  # 빌드 후 JAR 파일 경로를 지정합니다.
+          retention-days: 1  # 아티팩트를 1일 동안만 저장
 
   deploy:
     runs-on: windows-latest
@@ -38,7 +79,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write # This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
@@ -59,5 +100,4 @@ jobs:
         with:
           app-name: 'portfolio-server'
           slot-name: 'Production'
-          package: '*.jar'
-          
+          package: '${{ github.workspace }}/build/libs/*.jar'  # JAR 파일 경로를 동적으로 지정합니다.
