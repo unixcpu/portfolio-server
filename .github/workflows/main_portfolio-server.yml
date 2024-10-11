@@ -100,4 +100,4 @@ jobs:
         with:
           app-name: 'portfolio-server'
           slot-name: 'Production'
-          package: '${{ github.workspace }}/build/libs/*.jar'  # JAR 파일 경로를 동적으로 지정합니다.
+          package: '${{ github.workspace }}/build/libs/portfolio-server-0.0.1-SNAPSHOT.jar'  # JAR 파일 경로를 동적으로 지정합니다.
