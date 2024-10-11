@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Java version
         uses: actions/setup-java@v4
         with:
@@ -59,7 +59,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: java-app
-          path: './build/libs'  # 다운로드한 아티팩트를 이 경로로 지정
+          path: './'  # 다운로드한 아티팩트를 기본 경로에 다운로드
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -74,4 +74,4 @@ jobs:
         with:
           app-name: 'portfolio-server'
           slot-name: 'Production'
-          package: './build/libs/portfolio-server-0.0.1-SNAPSHOT.jar'  # 다운로드된 JAR 파일 경로를 지정
+          package: './java-app/build/libs/portfolio-server-0.0.1-SNAPSHOT.jar'  # 다운로드된 JAR 파일 경로를 지정
