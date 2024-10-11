@@ -42,7 +42,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: '${{ github.workspace }}/build/libs/*.jar'  # 빌드 후 JAR 파일 경로를 지정합니다.
+          path: 'build/libs/*.jar'  # 빌드 후 JAR 파일 경로를 지정합니다.
           retention-days: 1  # 아티팩트를 1일 동안만 저장
 
   deploy:
@@ -59,7 +59,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: java-app
-      
+          path: './build/libs'  # 다운로드한 아티팩트를 이 경로로 지정
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -73,4 +74,4 @@ jobs:
         with:
           app-name: 'portfolio-server'
           slot-name: 'Production'
-          package: '${{ github.workspace }}/build/libs/portfolio-server-0.0.1-SNAPSHOT.jar'  # JAR 파일 경로를 동적으로 지정합니다.
+          package: './build/libs/portfolio-server-0.0.1-SNAPSHOT.jar'  # 다운로드된 JAR 파일 경로를 지정
