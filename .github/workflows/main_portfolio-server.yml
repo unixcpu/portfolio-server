@@ -17,34 +17,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
-      # 기존 모든 아티팩트 삭제
-      - name: Delete all existing artifacts before build
-        run: |
-          echo "Fetching all artifacts..."
-
-          # GitHub API를 사용하여 아티팩트 ID를 가져옵니다.
-          $response = Invoke-RestMethod -Uri "https://api.github.com/repos/${{ github.repository }}/actions/artifacts" `
-                                         -Headers @{
-                                             "Authorization" = "token ${{ secrets.GITHUB_TOKEN }}"
-                                             "Accept" = "application/vnd.github.v3+json"
-                                         }
-
-          $ARTIFACTS = $response.artifacts | Select-Object -ExpandProperty id
-
-          echo "Found artifacts: $ARTIFACTS"
-
-          # foreach 문으로 아티팩트를 삭제합니다.
-          foreach ($ARTIFACT_ID in $ARTIFACTS) {
-            echo "Deleting artifact with ID: $ARTIFACT_ID"
-            Invoke-RestMethod -Uri "https://api.github.com/repos/${{ github.repository }}/actions/artifacts/$ARTIFACT_ID" `
-                              -Method Delete `
-                              -Headers @{
-                                  "Authorization" = "token ${{ secrets.GITHUB_TOKEN }}"
-                                  "Accept" = "application/vnd.github.v3+json"
-                              }
-          }
-
+      
       - name: Set up Java version
         uses: actions/setup-java@v4
         with:
