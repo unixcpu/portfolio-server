@@ -73,4 +73,4 @@ jobs:
         with:
           app-name: 'portfolio-server'
           slot-name: 'Production'
-          package: './build/libs/portfolio-server-0.0.1-SNAPSHOT.jar'  # 정확한 JAR 파일 경로
+          package: './build/libs/portfolio-0.0.1-SNAPSHOT.jar'  # 정확한 JAR 파일 경로
